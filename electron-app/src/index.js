@@ -1,5 +1,6 @@
+import('../../express-server/main.js')
+
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -12,7 +13,6 @@ const createWindow = () => {
     width: 800,
     height: 600,
   })
-
   mainWindow.loadURL('http://localhost:3000')
 }
 

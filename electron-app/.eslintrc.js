@@ -34,5 +34,8 @@ module.exports = {
     'linebreak-style': 0,
     'import/no-extraneous-dependencies': 0,
     'global-require': 0,
+    'import/no-unresolved': 0,
+    'import/extensions': 0,
+    'import/no-relative-packages': 0,
   },
 }
