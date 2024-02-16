@@ -1,4 +1,4 @@
-export function getNamesOfTempFiles(files, tempDirectory){
+const getNamesOfTempFiles = (files, tempDirectory)=>{
   const fileNames = ['Ex_out_temp', 'Ey_out_temp', 'Ez_out_temp']
   const Ex = [], Ey = [], Ez = []
   for (let index = 0; index < files.length; index += 1) {
@@ -8,3 +8,5 @@ export function getNamesOfTempFiles(files, tempDirectory){
   }
   return ({Ex, Ey, Ez})
 }
+
+module.exports = getNamesOfTempFiles

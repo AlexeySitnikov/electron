@@ -1,7 +1,7 @@
-import fs from 'fs'
-// const fs = require('fs')
+// import fs from 'fs'
+const fs = require('fs')
 
-export function writeOutputFile(sourceFiles = [], targetFile, startWriteTime){
+const writeOutputFile = (sourceFiles = [], targetFile, startWriteTime)=>{
     const files = sourceFiles
     const tempFilesToBeDeleted = [...sourceFiles]
     const fileWriteStream = fs.createWriteStream(targetFile)
@@ -32,3 +32,5 @@ export function writeOutputFile(sourceFiles = [], targetFile, startWriteTime){
     fileWriteStream.close()
     }) 
   }
+
+  module.exports = writeOutputFile

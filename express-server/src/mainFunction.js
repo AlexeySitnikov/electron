@@ -1,9 +1,9 @@
-import { getTempDirectory } from './getTempDirectory.js'
-import { makeTempDirectory } from './makeTempDirectory.js'
-import { readInitialFiles } from './readInitialFiles.js'
-import { writeOutputFiles } from './writeOutputFiles.js'
+const getTempDirectory = require( './getTempDirectory.js')
+const makeTempDirectory = require( './makeTempDirectory.js')
+const readInitialFiles = require( './readInitialFiles.js')
+const writeOutputFiles = require( './writeOutputFiles.js')
 
-export async function mainFunction(inputFiles){
+const mainFunction = async(inputFiles)=>{
   const files = [...inputFiles]
   const startTime = Date.now()
   const { currentDirectory } = getTempDirectory(files)
@@ -20,3 +20,5 @@ export async function mainFunction(inputFiles){
     
   console.log('Time needed to write all files: ' + (Date.now() - startWriteTime)/1000 + ' sec')
 }
+
+module.exports = mainFunction

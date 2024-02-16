@@ -1,7 +1,7 @@
-import('../../express-server/main.js')
-
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+// const path = require('path')
+
+const mainserver = require('./server/main.js')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -14,14 +14,18 @@ const createWindow = () => {
     width: 800,
     height: 600,
   })
-  // mainWindow.loadURL('http://localhost:3000')
-  mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  mainWindow.loadURL('http://localhost:3000')
+  // mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  mainWindow.openDevTools()
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', () => {
+  mainserver()
+  createWindow()
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

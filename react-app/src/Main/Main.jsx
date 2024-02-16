@@ -3,16 +3,20 @@ import style from './style.module.css'
 export function Main({ selectedFiles }) {
   const onClickButtonHandler = async () => {
     let requestString = ''
-    selectedFiles.forEach((element) => {
-      requestString += `${element} `
+    selectedFiles.forEach((element, index) => {
+      if (index < selectedFiles.length - 1) {
+        requestString += `${element.replaceAll('\\', 'temp_symbol').replaceAll(' ', 'temp_space')}temp_divider`
+      } else {
+        requestString += `${element.replaceAll('\\', 'temp_symbol').replaceAll(' ', 'temp_space')}`
+      }
     })
-    const responce = await fetch(`http://localhost:3333/${requestString.replaceAll('\\', '')}`, {
+    // console.log(requestString)
+    await fetch(`http://localhost:3333/${requestString}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-    console.log(await responce.json())
   }
 
   return (

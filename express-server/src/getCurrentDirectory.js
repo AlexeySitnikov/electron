@@ -1,6 +1,8 @@
-import path from 'path'
-// const path = require('path')
+// import path from 'path'
+const path = require('path')
 
-export function getCurrentDirectory(files){
+const getCurrentDirectory = (files)=>{
   return path.dirname(files[0])
 }
+
+module.exports = getCurrentDirectory

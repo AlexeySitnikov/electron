@@ -1,7 +1,7 @@
-import fs from 'fs'
-// const fs = require('fs')
+// import fs from 'fs'
+const fs = require('fs')
 
-export function makeTempDirectory(tempDirectory){
+const makeTempDirectory = (tempDirectory)=>{
   try {
     if (!fs.existsSync(tempDirectory)) {
       fs.mkdirSync(tempDirectory);
@@ -10,3 +10,5 @@ export function makeTempDirectory(tempDirectory){
     console.error(err);
   }
 }
+
+module.exports = makeTempDirectory
