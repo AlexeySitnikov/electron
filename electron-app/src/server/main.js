@@ -2,8 +2,8 @@ const cors = require('cors')
 
 const express = require('express')
 
-const mainFunction = require('./mainFunction.js')
-const getInputFiles = require('./getInputFiles.js')
+// const mainFunction = require('./mainFunction.js')
+// const getInputFiles = require('./getInputFiles.js')
 
 const fileServer = () => {
   const server = express()
@@ -21,7 +21,8 @@ const fileServer = () => {
   server.post('/:inputRequest/', async (req, res) => {
     const { inputRequest } = req.params
     const files = inputRequest.replaceAll('temp_symbol', '\\').replaceAll('temp_space', ' ').split('temp_divider')
-    await mainFunction(getInputFiles(files))
+    // await mainFunction(getInputFiles(files))
+    console.log(files)
     res.send({
       files,
     })

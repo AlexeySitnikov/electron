@@ -1,6 +1,20 @@
+import { useState } from 'react'
 import style from './style.module.css'
+import { Tabs } from '../Tabs/Tabs'
 
 export function Main({ selectedFiles }) {
+  const [files, setFiles] = useState(null)
+
+  const makeFetch = async (requestString) => {
+    const responce = await fetch(`http://localhost:3333/${requestString}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    return responce.json()
+  }
+
   const onClickButtonHandler = async () => {
     let requestString = ''
     selectedFiles.forEach((element, index) => {
@@ -10,24 +24,22 @@ export function Main({ selectedFiles }) {
         requestString += `${element.replaceAll('\\', 'temp_symbol').replaceAll(' ', 'temp_space')}`
       }
     })
-    // console.log(requestString)
-    await fetch(`http://localhost:3333/${requestString}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+
+    setFiles((await makeFetch(requestString)).files)
+  }
+
+  if (files) {
+    return (
+      <Tabs files={files} />
+    )
   }
 
   return (
     <div className={style.mainPage}>
 
       <div className={style.callModalWindowsStyle}>
-        <button className={style.button} type="button" id="CST" onClick={onClickButtonHandler}>
-          Get modulation for CST
-        </button>
-        <button className={style.button} type="button" id="points">
-          Get modulation by points
+        <button className={style.button} type="button" onClick={onClickButtonHandler}>
+          Upload files
         </button>
       </div>
 

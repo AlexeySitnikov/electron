@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron')
 // const path = require('path')
 
-const mainserver = require('./server/main.js')
+const fileServer = require('./server/main.js')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -23,7 +23,7 @@ const createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  mainserver()
+  fileServer()
   createWindow()
 })
 
