@@ -19,7 +19,6 @@ export function Tabs({ files }) {
             setActiveTab={setActiveTab}
             key={crypto.randomUUID()}
           />
-
         ))}
       </ul>
 
