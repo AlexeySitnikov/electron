@@ -19,9 +19,13 @@ export function Main({ selectedFiles }) {
     let requestString = ''
     selectedFiles.forEach((element, index) => {
       if (index < selectedFiles.length - 1) {
-        requestString += `${element.replaceAll('\\', 'temp_symbol').replaceAll(' ', 'temp_space')}temp_divider`
+        requestString += `${element
+          .replaceAll('\\', 'temp_symbol')
+          .replaceAll(' ', 'temp_space')}temp_divider`
       } else {
-        requestString += `${element.replaceAll('\\', 'temp_symbol').replaceAll(' ', 'temp_space')}`
+        requestString += `${element
+          .replaceAll('\\', 'temp_symbol')
+          .replaceAll(' ', 'temp_space')}`
       }
     })
 
