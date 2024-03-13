@@ -3,7 +3,8 @@ const cors = require('cors')
 const express = require('express')
 
 // const mainFunction = require('./mainFunction.js')
-// const getInputFiles = require('./getInputFiles.js')
+const getInputFiles = require('./getInputFiles.js')
+const readFirstFewStringsFromFiles = require('./readFirstFewStringsFromFiles.js')
 
 const fileServer = () => {
   const server = express()
@@ -18,13 +19,13 @@ const fileServer = () => {
     })
   })
 
-  server.post('/:inputRequest/', async (req, res) => {
+  server.post('/readFiles/:inputRequest/', async (req, res) => {
     const { inputRequest } = req.params
     const files = inputRequest.replaceAll('temp_symbol', '\\').replaceAll('temp_space', ' ').split('temp_divider')
     // await mainFunction(getInputFiles(files))
-    console.log(files)
+    const responce = await readFirstFewStringsFromFiles(getInputFiles(files))
     res.send({
-      files,
+      responce,
     })
   })
 

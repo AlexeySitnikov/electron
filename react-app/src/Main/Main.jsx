@@ -6,7 +6,7 @@ export function Main({ selectedFiles }) {
   const [files, setFiles] = useState(null)
 
   const makeFetch = async (requestString) => {
-    const responce = await fetch(`http://localhost:3333/${requestString}`, {
+    const responce = await fetch(`http://localhost:3333/readFiles/${requestString}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -28,8 +28,8 @@ export function Main({ selectedFiles }) {
           .replaceAll(' ', 'temp_space')}`
       }
     })
-
-    setFiles((await makeFetch(requestString)).files)
+    const responce = await makeFetch(requestString)
+    setFiles(responce.responce)
   }
 
   if (files) {
