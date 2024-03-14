@@ -64,6 +64,12 @@
    
   /* Tab Content Styles */
   .TabContent {
-    font-size: 2rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .in{
+    width:2rem;
+    font-size: 1rem;
     text-align: center;
   }

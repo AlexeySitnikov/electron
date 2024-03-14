@@ -1,11 +1,13 @@
 const fs = require('fs')
 const readline = require('readline')
 
-const readFirstFewStringsFromFile = (file) => (
+const readFirstFewStringsFromFile = (file, index) => (
   new Promise((resolve) => {
     const fileData = {
       name: file,
       data: [],
+      deleteFirstTwoStrings: true,
+      fileOrder: index + 1,
     }
     let lineIndex = 0
     const readStream = fs.createReadStream(file, 'utf-8')

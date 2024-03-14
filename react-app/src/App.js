@@ -17,7 +17,7 @@ function App() {
   }
 
   return (
-    <div className={style.donloadOnlyPage}>
+    <div className={style.mainPage}>
       <Header setSelectedFiles={setSelectedFiles} />
     </div>
   )

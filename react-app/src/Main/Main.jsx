@@ -3,7 +3,7 @@ import style from './style.module.css'
 import { Tabs } from '../Tabs/Tabs'
 
 export function Main({ selectedFiles }) {
-  const [files, setFiles] = useState(null)
+  const [analyzedFiles, setAnalyzedFiles] = useState(null)
 
   const makeFetch = async (requestString) => {
     const responce = await fetch(`http://localhost:3333/readFiles/${requestString}`, {
@@ -29,12 +29,15 @@ export function Main({ selectedFiles }) {
       }
     })
     const responce = await makeFetch(requestString)
-    setFiles(responce.responce)
+    setAnalyzedFiles(responce.responce)
   }
 
-  if (files) {
+  if (analyzedFiles) {
     return (
-      <Tabs files={files} />
+      <Tabs
+        analyzedFiles={analyzedFiles}
+        setAnalyzedFiles={setAnalyzedFiles}
+      />
     )
   }
 
@@ -43,7 +46,7 @@ export function Main({ selectedFiles }) {
 
       <div className={style.callModalWindowsStyle}>
         <button className={style.button} type="button" onClick={onClickButtonHandler}>
-          Upload files
+          Read files
         </button>
       </div>
 
