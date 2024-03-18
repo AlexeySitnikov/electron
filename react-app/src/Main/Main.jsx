@@ -1,21 +1,16 @@
 import { useState } from 'react'
 import style from './style.module.css'
 import { Tabs } from '../Tabs/Tabs'
+import { useModalWindow } from '../CustomHooks/useModalWindow'
+import { fetchForInitialReadFiles } from '../constrains/fetchForInitialReadFiles'
 
 export function Main({ selectedFiles }) {
   const [analyzedFiles, setAnalyzedFiles] = useState(null)
+  const {
+    isModalOpen, content, closeModalClickHandler, openModalClickHandler,
+  } = useModalWindow()
 
-  const makeFetch = async (requestString) => {
-    const responce = await fetch(`http://localhost:3333/readFiles/${requestString}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    return responce.json()
-  }
-
-  const onClickButtonHandler = async () => {
+  const onClickReadButtonHandler = async () => {
     let requestString = ''
     selectedFiles.forEach((element, index) => {
       if (index < selectedFiles.length - 1) {
@@ -28,7 +23,7 @@ export function Main({ selectedFiles }) {
           .replaceAll(' ', 'temp_space')}`
       }
     })
-    const responce = await makeFetch(requestString)
+    const responce = await fetchForInitialReadFiles(requestString)
     setAnalyzedFiles(responce.responce)
   }
 
@@ -37,19 +32,21 @@ export function Main({ selectedFiles }) {
       <Tabs
         analyzedFiles={analyzedFiles}
         setAnalyzedFiles={setAnalyzedFiles}
+        isModalOpen={isModalOpen}
+        content={content}
+        closeModalClickHandler={closeModalClickHandler}
+        openModalClickHandler={openModalClickHandler}
       />
     )
   }
 
   return (
     <div className={style.mainPage}>
-
       <div className={style.callModalWindowsStyle}>
-        <button className={style.button} type="button" onClick={onClickButtonHandler}>
+        <button className={style.button} type="button" onClick={onClickReadButtonHandler}>
           Read files
         </button>
       </div>
-
     </div>
   )
 }

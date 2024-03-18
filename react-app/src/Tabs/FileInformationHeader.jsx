@@ -1,24 +1,26 @@
 import { useRef } from 'react'
 import style from './style.module.css'
 
-export function FileInformationHeader({
-  el, analyzedFiles, setAnalyzedFiles,
-}) {
+export function FileInformationHeader({ el, analyzedFiles, setAnalyzedFiles }) {
   const currentFiles = analyzedFiles
 
   const inputRef = useRef(null)
 
   const onChangeOrderHandler = () => {
-    console.log(inputRef.current.value)
+    const currentIndex = currentFiles.findIndex((element) => (element.name === el.name))
+    if (currentIndex > -1) {
+      currentFiles[currentIndex].fileOrder = Number(inputRef.current.value)
+    }
+    setAnalyzedFiles([...currentFiles])
   }
 
   const onChangeDeleteCheckHandler = () => {
-    const currentIndex = currentFiles.findIndex((element) => (element.fileOrder === el.fileOrder))
+    const currentIndex = currentFiles.findIndex((element) => (element.name === el.name))
     if (currentIndex > -1) {
       currentFiles[currentIndex]
         .deleteFirstTwoStrings = !currentFiles[currentIndex].deleteFirstTwoStrings
     }
-    setAnalyzedFiles(currentFiles)
+    setAnalyzedFiles([...currentFiles])
   }
 
   return (
