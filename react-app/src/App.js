@@ -7,11 +7,11 @@ import { Main } from './Main/Main'
 function App() {
   const [selectedFiles, setSelectedFiles] = useState(null)
 
-  if (selectedFiles) {
+  if (selectedFiles && selectedFiles.length > 0) {
     return (
       <div className={style.mainPage}>
         <Header setSelectedFiles={setSelectedFiles} />
-        <Main selectedFiles={selectedFiles} />
+        <Main selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
       </div>
     )
   }

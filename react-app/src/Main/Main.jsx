@@ -4,7 +4,7 @@ import { Tabs } from '../Tabs/Tabs'
 import { useModalWindow } from '../CustomHooks/useModalWindow'
 import { fetchForInitialReadFiles } from '../constrains/fetchForInitialReadFiles'
 
-export function Main({ selectedFiles }) {
+export function Main({ selectedFiles, setSelectedFiles }) {
   const [analyzedFiles, setAnalyzedFiles] = useState(null)
   const {
     isModalOpen, content, closeModalClickHandler, openModalClickHandler,
@@ -14,13 +14,13 @@ export function Main({ selectedFiles }) {
     let requestString = ''
     selectedFiles.forEach((element, index) => {
       if (index < selectedFiles.length - 1) {
-        requestString += `${element
+        requestString += `name:${element
           .replaceAll('\\', 'temp_symbol')
-          .replaceAll(' ', 'temp_space')}temp_divider`
+          .replaceAll(' ', 'temp_space')}temp_dividerdeleteFirstTwoStrings:${element.deleteFirstTwoStrings}temp_divider`
       } else {
-        requestString += `${element
+        requestString += `name:${element
           .replaceAll('\\', 'temp_symbol')
-          .replaceAll(' ', 'temp_space')}`
+          .replaceAll(' ', 'temp_space')}temp_dividerdeleteFirstTwoStrings:${element.deleteFirstTwoStrings}`
       }
     })
     const responce = await fetchForInitialReadFiles(requestString)
@@ -30,6 +30,7 @@ export function Main({ selectedFiles }) {
   if (analyzedFiles) {
     return (
       <Tabs
+        setSelectedFiles={setSelectedFiles}
         analyzedFiles={analyzedFiles}
         setAnalyzedFiles={setAnalyzedFiles}
         isModalOpen={isModalOpen}

@@ -9,15 +9,18 @@ import { fetchForGenerateOutputFiles } from '../constrains/fetchForGenerateOutpu
 import style from './style.module.css'
 
 export function Tabs({
-  analyzedFiles, setAnalyzedFiles,
+  setSelectedFiles, analyzedFiles, setAnalyzedFiles,
   isModalOpen, content, closeModalClickHandler, openModalClickHandler,
 }) {
   const currentFiles = analyzedFiles
   const [activeTab, setActiveTab] = useState('tab0')
 
-  const onClickNextButtonHandler = () => {
+  const onClickNextButtonHandler = async () => {
     if (isFilesOrderCorrect({ analyzedFiles })) {
-      fetchForGenerateOutputFiles(sortFilesOrder({ analyzedFiles }))
+      const responce = await fetchForGenerateOutputFiles(sortFilesOrder({ analyzedFiles }))
+      if (responce.status === 200) {
+        setSelectedFiles(null)
+      }
     } else {
       const idForModalWindow = {
         status: 'error',

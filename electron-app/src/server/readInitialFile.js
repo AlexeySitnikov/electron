@@ -1,6 +1,7 @@
 // import fs from 'fs'
 const fs = require('fs')
 const readline = require('readline')
+const writeExEyEz = require('./writeExEyEz')
 // import readline from 'readline'
 
 const readInitialFile = (file, index, tempDirectory) => (
@@ -9,17 +10,21 @@ const readInitialFile = (file, index, tempDirectory) => (
     const writerEy = fs.createWriteStream(`${tempDirectory}\\Ey_out_temp_${index + 1}.txt`)
     const writerEz = fs.createWriteStream(`${tempDirectory}\\Ez_out_temp_${index + 1}.txt`)
     let lineIndex = 0
-    const readStream = fs.createReadStream(file, 'utf-8')
+    const readStream = fs.createReadStream(file.name, 'utf-8')
     const rl = readline.createInterface({ input: readStream })
-    rl.on('line', (line) => {
-      if (lineIndex > 1) {
-        writerEx.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[3]}\n`)// [0] - x //[3] - Ex
-        writerEy.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[5]}\n`)// [1] - y //[5] - Ey
-        writerEz.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[2]}\n`)// [2] - z //[7] - Ez
-      } else {
-        lineIndex += 1
-      }
-    })
+    if (file.deleteFirstTwoStrings) {
+      rl.on('line', (line) => {
+        if (lineIndex > 1) {
+          writeExEyEz(writerEx, writerEy, writerEz, line)
+        } else {
+          lineIndex += 1
+        }
+      })
+    } else {
+      rl.on('line', (line) => {
+        writeExEyEz(writerEx, writerEy, writerEz, line)
+      })
+    }
     rl.on('close', () => {
       writerEx.end()
       writerEy.end()
