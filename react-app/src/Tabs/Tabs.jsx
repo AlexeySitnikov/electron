@@ -6,7 +6,8 @@ import { isFilesOrderCorrect } from '../constrains/isFilesOrderCorrect'
 import { sortFilesOrder } from '../constrains/sortFilesOrder'
 import { Modal } from '../Modal/Modal'
 import style from './style.module.css'
-import { fetchForWhatToAddToOutputFiles } from '../constrains/fetchForWhatToAddToOutputFiles'
+// import { fetchForWhatToAddToOutputFiles } from '../constrains/fetchForWhatToAddToOutputFiles'
+import { fetchForGenerateOutputFiles } from '../constrains/fetchForGenerateOutputFiles'
 
 export function Tabs({
   setSelectedFiles, analyzedFiles, setAnalyzedFiles,
@@ -17,7 +18,8 @@ export function Tabs({
 
   const onClickNextButtonHandler = async () => {
     if (isFilesOrderCorrect({ analyzedFiles })) {
-      const responce = await fetchForWhatToAddToOutputFiles(sortFilesOrder({ analyzedFiles }))
+      // const responce = await fetchForWhatToAddToOutputFiles(sortFilesOrder({ analyzedFiles }))
+      const responce = await fetchForGenerateOutputFiles(sortFilesOrder({ analyzedFiles }))
       if (responce.status === 200) {
         setSelectedFiles(null)
       }
