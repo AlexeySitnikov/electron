@@ -5,6 +5,7 @@ const express = require('express')
 const mainFunction = require('./mainFunction.js')
 const getInputFiles = require('./getInputFiles.js')
 const readFirstFewStringsFromFiles = require('./readFirstFewStringsFromFiles.js')
+const getBordersValues = require('./getBordersValues.js')
 
 const fileServer = () => {
   const server = express()
@@ -46,6 +47,21 @@ const fileServer = () => {
     }
     await mainFunction(getInputFiles(files))
     res.sendStatus(200)
+  })
+
+  server.post('/whatToAddToOutputFiles/:inputRequest/', async (req, res) => {
+    const { inputRequest } = req.params
+    const inputString = inputRequest.replaceAll('temp_symbol', '\\').replaceAll('temp_space', ' ').split('temp_divider')
+    const files = []
+    for (let i = 0; i < inputString.length; i += 2) {
+      files.push({
+        name: inputString[i].replaceAll('name:', ''),
+        deleteFirstTwoStrings: inputString[i + 1].replaceAll('deleteFirstTwoStrings:', '').toLowerCase() === 'true',
+      })
+    }
+    // await mainFunction(getInputFiles(files))
+    const responce = await getBordersValues(getInputFiles(files))
+    res.send({ responce })
   })
 
   server.listen(PORT, () => {
