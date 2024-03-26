@@ -59,7 +59,6 @@ const fileServer = () => {
         deleteFirstTwoStrings: inputString[i + 1].replaceAll('deleteFirstTwoStrings:', '').toLowerCase() === 'true',
       })
     }
-    // await mainFunction(getInputFiles(files))
     const responce = await getBordersValues(getInputFiles(files))
     res.send({ responce })
   })
