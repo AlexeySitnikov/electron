@@ -8,6 +8,7 @@ import { Modal } from '../Modal/Modal'
 import style from './style.module.css'
 // import { fetchForWhatToAddToOutputFiles } from '../constrains/fetchForWhatToAddToOutputFiles'
 import { fetchForGenerateOutputFiles } from '../constrains/fetchForGenerateOutputFiles'
+import { getLinesNumber } from '../constrains/getLines'
 
 export function Tabs({
   setSelectedFiles, analyzedFiles, setAnalyzedFiles,
@@ -30,6 +31,20 @@ export function Tabs({
       }
       openModalClickHandler(idForModalWindow)
     }
+  }
+
+  const a = async () => {
+    const linesNumber = Promise.all([...currentFiles.map(
+      async (file, index) => {
+        const currentLine = {
+          value: await getLinesNumber(file),
+          id: index,
+        }
+        return currentLine
+      },
+    )])
+
+    console.log(linesNumber)
   }
 
   return (
@@ -70,6 +85,9 @@ export function Tabs({
         <div className={style.buttonContainer}>
           <button className={style.button} type="button" onClick={onClickNextButtonHandler}>
             Next
+          </button>
+          <button className={style.button} type="button" onClick={a}>
+            Next1
           </button>
         </div>
       </div>
