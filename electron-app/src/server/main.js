@@ -12,6 +12,7 @@ const fileServer = () => {
 
   const PORT = 3333
 
+  server.use(express.json())
   server.use(cors())
 
   server.get('/', (req, res) => {
@@ -62,6 +63,11 @@ const fileServer = () => {
     const responce = await getBordersValues(getInputFiles(files))
     res.send({ responce })
   })
+
+  // server.post('/asd/', async (req) => {
+  //   const asdd = Array.from(req.body)
+  //   console.log((asdd[0]))
+  // })
 
   server.listen(PORT, () => {
     console.log(`server has been started at port: ${PORT}`)

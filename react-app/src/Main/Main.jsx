@@ -10,10 +10,12 @@ export function Main({ selectedFiles, setSelectedFiles }) {
     isModalOpen, content, closeModalClickHandler, openModalClickHandler,
   } = useModalWindow()
 
+  const arrayOfFilesPaths = Array.from(selectedFiles).map((el) => el.path)
+
   const onClickReadButtonHandler = async () => {
     let requestString = ''
-    selectedFiles.forEach((element, index) => {
-      if (index < selectedFiles.length - 1) {
+    arrayOfFilesPaths.forEach((element, index) => {
+      if (index < arrayOfFilesPaths.length - 1) {
         requestString += `name:${element
           .replaceAll('\\', 'temp_symbol')
           .replaceAll(' ', 'temp_space')}temp_dividerdeleteFirstTwoStrings:${element.deleteFirstTwoStrings}temp_divider`
@@ -30,6 +32,7 @@ export function Main({ selectedFiles, setSelectedFiles }) {
   if (analyzedFiles) {
     return (
       <Tabs
+        selectedFiles={selectedFiles}
         setSelectedFiles={setSelectedFiles}
         analyzedFiles={analyzedFiles}
         setAnalyzedFiles={setAnalyzedFiles}

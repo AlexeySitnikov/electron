@@ -8,10 +8,9 @@ import { Modal } from '../Modal/Modal'
 import style from './style.module.css'
 // import { fetchForWhatToAddToOutputFiles } from '../constrains/fetchForWhatToAddToOutputFiles'
 import { fetchForGenerateOutputFiles } from '../constrains/fetchForGenerateOutputFiles'
-import { getLinesNumber } from '../constrains/getLines'
 
 export function Tabs({
-  setSelectedFiles, analyzedFiles, setAnalyzedFiles,
+  selectedFiles, setSelectedFiles, analyzedFiles, setAnalyzedFiles,
   isModalOpen, content, closeModalClickHandler, openModalClickHandler,
 }) {
   const currentFiles = analyzedFiles
@@ -34,17 +33,30 @@ export function Tabs({
   }
 
   const a = async () => {
-    const linesNumber = Promise.all([...currentFiles.map(
-      async (file, index) => {
-        const currentLine = {
-          value: await getLinesNumber(file),
-          id: index,
-        }
-        return currentLine
-      },
-    )])
+    // const ar = Array.from(selectedFiles).map((file) => (
+    //   {
+    //     lastModified: file.lastModified,
+    //     lastModifiedDate: file.lastModifiedDate,
+    //     name: file.name,
+    //     path: file.path,
+    //     size: file.size,
+    //     type: file.type,
+    //     webkitRelativePath: file.webkitRelativePath,
 
-    console.log(linesNumber)
+    //   }
+    // ))
+    console.log(selectedFiles)
+    // // const reader = new TxtReader()
+    // // reader.sniffLines(ar[0], 10).then((res) => {
+    // //   console.log(res.result)
+    // // }).catch((er) => { console.log(er) })
+    // await fetch('http://localhost:3333/asd/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(ar),
+    // })
   }
 
   return (

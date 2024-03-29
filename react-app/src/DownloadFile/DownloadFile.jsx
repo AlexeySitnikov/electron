@@ -10,8 +10,8 @@ export function DownloadFile({ setSelectedFiles }) {
   }
 
   const clickHandlerFileChange = (e) => {
-    const arrayOfFilesPaths = Array.from(e.target.files).map((el) => el.path)
-    setSelectedFiles(arrayOfFilesPaths)
+    // const arrayOfFilesPaths = Array.from(e.target.files).map((el) => el.path)
+    setSelectedFiles(e.target.files)
   }
 
   return (
