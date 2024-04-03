@@ -16,8 +16,8 @@ export function Tabs({
 
   const onClickNextButtonHandler = async () => {
     // const a = await analizeBorders(selectedFiles)
-    getDeltaX(selectedFiles[0])
-    // console.log(a)
+    const asd = await getDeltaX(selectedFiles[0])
+    console.log(asd)
     console.log(isFilesOrderCorrect({ analyzedFiles }))
     console.log(sortFilesOrder({ analyzedFiles }))
   }
