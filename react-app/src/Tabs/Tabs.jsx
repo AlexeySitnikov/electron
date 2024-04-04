@@ -14,8 +14,13 @@ export function Tabs({
   const [activeTab, setActiveTab] = useState('tab0')
 
   const onClickNextButtonHandler = async () => {
-    const a = await analizeBorders(selectedFiles)
-    console.log(a)
+    const borders = await analizeBorders(selectedFiles)
+    const addInformation = `${String(borders.Zmax - borders.Zmin)} ${String((borders.Zmax - borders.Zmin) / 1000)}
+    ${String(borders.Xmax - borders.Xmin)} ${String(borders.Xmin / 1000)} ${String(borders.Xmax / 1000)}
+    ${String(borders.Ymax - borders.Ymin)} ${String(borders.Ymin / 1000)} ${String(borders.Ymax / 1000)}
+    1\n`
+
+    console.log(addInformation)
     console.log(isFilesOrderCorrect({ analyzedFiles }))
     console.log(sortFilesOrder({ analyzedFiles }))
   }
