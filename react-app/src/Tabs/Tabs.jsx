@@ -5,8 +5,7 @@ import { sortFilesOrder } from '../constrains/sortFilesOrder'
 import { Modal } from '../Modal/Modal'
 import { TabsContainer } from './TabsContainer'
 import { NextButton } from './NextButton'
-// import { analizeBorders } from '../constrains/analizeBorders'
-import { getDeltaX } from '../constrains/getDeltaX'
+import { analizeBorders } from '../constrains/analizeBorders'
 
 export function Tabs({
   selectedFiles, analyzedFiles, setAnalyzedFiles,
@@ -15,9 +14,8 @@ export function Tabs({
   const [activeTab, setActiveTab] = useState('tab0')
 
   const onClickNextButtonHandler = async () => {
-    // const a = await analizeBorders(selectedFiles)
-    const asd = await getDeltaX(selectedFiles[0])
-    console.log(asd)
+    const a = await analizeBorders(selectedFiles)
+    console.log(a)
     console.log(isFilesOrderCorrect({ analyzedFiles }))
     console.log(sortFilesOrder({ analyzedFiles }))
   }
