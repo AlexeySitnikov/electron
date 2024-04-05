@@ -1,28 +1,36 @@
 import { useState } from 'react'
 
-import { isFilesOrderCorrect } from '../constrains/isFilesOrderCorrect'
-import { sortFilesOrder } from '../constrains/sortFilesOrder'
+import { hasFilesOrderDublicates } from '../constrains/hasFilesOrderDublicates'
 import { Modal } from '../Modal/Modal'
 import { TabsContainer } from './TabsContainer'
-import { NextButton } from './NextButton'
 import { analizeBorders } from '../constrains/analizeBorders'
+import { TabWithAddInformation } from './TabWithAddInformation'
+import { makeFileObjects } from '../constrains/makeFileObjects'
+import { makeBordersString } from '../constrains/makeBordersString'
+import { Button } from '../Buttons/Button'
 
 export function Tabs({
   selectedFiles, analyzedFiles, setAnalyzedFiles,
-  isModalOpen, content, closeModalClickHandler,
+  isModalOpen, content, closeModalClickHandler, openModalClickHandler,
 }) {
   const [activeTab, setActiveTab] = useState('tab0')
+  const [addInformation, setAddInformation] = useState('')
 
   const onClickNextButtonHandler = async () => {
-    const borders = await analizeBorders(selectedFiles)
-    const addInformation = `${String(borders.Zmax - borders.Zmin)} ${String((borders.Zmax - borders.Zmin) / 1000)}
-    ${String(borders.Xmax - borders.Xmin)} ${String(borders.Xmin / 1000)} ${String(borders.Xmax / 1000)}
-    ${String(borders.Ymax - borders.Ymin)} ${String(borders.Ymin / 1000)} ${String(borders.Ymax / 1000)}
-    1\n`
+    if (!hasFilesOrderDublicates({ analyzedFiles })) {
+      const borders = await analizeBorders(makeFileObjects({ selectedFiles, analyzedFiles }))
+      makeBordersString({ setAddInformation, borders })
+    } else {
+      const id = {
+        status: 'error',
+        message: 'Files order is incorrect',
+      }
+      openModalClickHandler(id)
+    }
+  }
 
-    console.log(addInformation)
-    console.log(isFilesOrderCorrect({ analyzedFiles }))
-    console.log(sortFilesOrder({ analyzedFiles }))
+  if (addInformation !== '') {
+    return (<TabWithAddInformation el={addInformation} />)
   }
 
   return (
@@ -36,8 +44,9 @@ export function Tabs({
         analyzedFiles={analyzedFiles}
         setAnalyzedFiles={setAnalyzedFiles}
       />
-      <NextButton
-        onClickNextButtonHandler={onClickNextButtonHandler}
+      <Button
+        buttonName="Analyze min and mas values"
+        onClickFunction={onClickNextButtonHandler}
       />
     </>
   )

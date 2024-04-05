@@ -1,13 +1,14 @@
 import { TxtReader } from 'txt-reader'
 // import { getLines } from './getLines'
 
-export function getLinesByNumber(file, index, startLine) {
+export function getLinesByNumber(file, index) {
   return (
     new Promise((resolve, reject) => {
       let lineCount = 0
       let responce = {}
+      const startLine = file.deleteFirstTwoStrings ? 3 : 1
       const reader = new TxtReader()
-      reader.loadFile(file).progress((progress) => {
+      reader.loadFile(file.file).progress((progress) => {
         if (index === 0) {
           console.log(`read file ${Math.round(progress)}%`)
         }

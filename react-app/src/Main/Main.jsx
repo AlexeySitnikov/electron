@@ -3,6 +3,7 @@ import style from './style.module.css'
 import { Tabs } from '../Tabs/Tabs'
 import { useModalWindow } from '../CustomHooks/useModalWindow'
 import { sniffFiles } from '../constrains/sniffFiles'
+import { Button } from '../Buttons/Button'
 
 export function Main({ selectedFiles, setSelectedFiles }) {
   const [analyzedFiles, setAnalyzedFiles] = useState(null)
@@ -32,9 +33,10 @@ export function Main({ selectedFiles, setSelectedFiles }) {
   return (
     <div className={style.mainPage}>
       <div className={style.callModalWindowsStyle}>
-        <button className={style.button} type="button" onClick={onClickReadButtonHandler}>
-          Read files
-        </button>
+        <Button
+          onClickFunction={onClickReadButtonHandler}
+          buttonName="Read files"
+        />
       </div>
     </div>
   )
