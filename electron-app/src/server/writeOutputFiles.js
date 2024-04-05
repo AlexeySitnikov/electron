@@ -3,12 +3,18 @@ const getNamesOfTempFiles = require('./getNamesOfTempFiles.js')
 const writeOutputFile = require('./writeOutputFile.js')
 // import { writeOutputFile } from './writeOutputFile.js'
 
-const writeOutputFiles = (files, currentDirectory, tempDirectory, startWriteTime) => {
+const writeOutputFiles = (
+  files,
+  currentDirectory,
+  tempDirectory,
+  startWriteTime,
+  addInformation,
+) => {
   const { Ex, Ey, Ez } = getNamesOfTempFiles(files, tempDirectory)
 
-  writeOutputFile(Ex, `${currentDirectory}\\E.edx`, startWriteTime)
-  writeOutputFile(Ey, `${currentDirectory}\\E.edy`, startWriteTime)
-  writeOutputFile(Ez, `${currentDirectory}\\E.edz`, startWriteTime)
+  writeOutputFile(Ex, `${currentDirectory}\\E.edx`, startWriteTime, addInformation)
+  writeOutputFile(Ey, `${currentDirectory}\\E.edy`, startWriteTime, addInformation)
+  writeOutputFile(Ez, `${currentDirectory}\\E.edz`, startWriteTime, addInformation)
 }
 
 module.exports = writeOutputFiles

@@ -64,10 +64,11 @@ const fileServer = () => {
     res.send({ responce })
   })
 
-  // server.post('/asd/', async (req) => {
-  //   const asdd = Array.from(req.body)
-  //   console.log((asdd[0]))
-  // })
+  server.post('/asd/', async (req, res) => {
+    const { files, addInformation } = req.body
+    await mainFunction(getInputFiles(files), addInformation)
+    res.sendStatus(200)
+  })
 
   server.listen(PORT, () => {
     console.log(`server has been started at port: ${PORT}`)

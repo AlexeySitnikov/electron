@@ -4,10 +4,11 @@
 // import fs from 'fs'
 const fs = require('fs')
 
-const writeOutputFile = (sourceFiles = [], targetFile, startWriteTime) => {
+const writeOutputFile = (sourceFiles = [], targetFile, startWriteTime, addInformation) => {
   const files = sourceFiles
   const tempFilesToBeDeleted = [...sourceFiles]
   const fileWriteStream = fs.createWriteStream(targetFile)
+  fileWriteStream.write(addInformation)
   streamMergeRecursive(files, fileWriteStream, tempFilesToBeDeleted, startWriteTime)
 }
 

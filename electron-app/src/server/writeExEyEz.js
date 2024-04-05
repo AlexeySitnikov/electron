@@ -1,6 +1,6 @@
 const writeExEyEz = (writerEx, writerEy, writerEz, line) => {
   writerEx.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[0]}\n`)// [0] - x //[3] - Ex
-  writerEy.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[5]}\n`)// [1] - y //[5] - Ey
+  writerEy.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[1]}\n`)// [1] - y //[5] - Ey
   writerEz.write(`${line.trim().replace(/\s\s+/g, ' ').split(' ')[2]}\n`)// [2] - z //[7] - Ez
 }
 

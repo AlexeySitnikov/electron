@@ -1,7 +1,27 @@
 import { Button } from '../Buttons/Button'
 import style from './style.module.css'
 
-export function TabWithAddInformation({ el }) {
+export function TabWithAddInformation({ addInformation, analyzedFiles }) {
+  const makeFetch = async () => {
+    const body = {
+      files: [...analyzedFiles.map((element) => ({
+        name: element.path,
+        deleteFirstTwoStrings: element.deleteFirstTwoStrings,
+      }))],
+      addInformation,
+    }
+    const res = await fetch('http://localhost:3333/asd/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+    if (res) {
+      console.log(res)
+    }
+  }
+
   return (
     <>
       <div className={style.Tabs}>
@@ -10,7 +30,7 @@ export function TabWithAddInformation({ el }) {
         </div>
         <br />
         <div className={style.additionalInformation}>
-          {el.split('\n').map((substring) => (
+          {addInformation.split('\n').map((substring) => (
             <div key={crypto.randomUUID()}>{substring}</div>
           ))}
         </div>
@@ -21,6 +41,7 @@ export function TabWithAddInformation({ el }) {
         />
         <Button
           buttonName="Make output files"
+          onClickFunction={makeFetch}
         />
       </div>
     </>

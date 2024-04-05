@@ -30,7 +30,12 @@ export function Tabs({
   }
 
   if (addInformation !== '') {
-    return (<TabWithAddInformation el={addInformation} />)
+    return (
+      <TabWithAddInformation
+        addInformation={addInformation}
+        analyzedFiles={analyzedFiles}
+      />
+    )
   }
 
   return (
