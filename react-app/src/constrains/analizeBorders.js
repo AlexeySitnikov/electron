@@ -11,13 +11,19 @@ export async function analizeBorders(files) {
   const detlas = getDeltaXYZ(fullXYZ[0].lines.result)
   return ({
     Xmin: Number(fullXYZ[0].result[0].value.trim().replace(/\s\s+/g, ' ').split(' ')[0]),
-    Xmax: Number(fullXYZ[1].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[0]),
+    Xmax: fullXYZ[1]
+      ? Number(fullXYZ[1].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[0])
+      : Number(fullXYZ[0].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[0]),
     deltaX: detlas.deltaX,
     Ymin: Number(fullXYZ[0].result[0].value.trim().replace(/\s\s+/g, ' ').split(' ')[1]),
-    Ymax: Number(fullXYZ[1].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[1]),
+    Ymax: fullXYZ[1]
+      ? Number(fullXYZ[1].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[1])
+      : Number(fullXYZ[0].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[1]),
     deltaY: detlas.deltaY,
     Zmin: Number(fullXYZ[0].result[0].value.trim().replace(/\s\s+/g, ' ').split(' ')[2]),
-    Zmax: Number(fullXYZ[1].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[2]),
+    Zmax: fullXYZ[1]
+      ? Number(fullXYZ[1].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[2])
+      : Number(fullXYZ[0].result[1].value.trim().replace(/\s\s+/g, ' ').split(' ')[2]),
     deltaZ: detlas.deltaZ,
   })
 }

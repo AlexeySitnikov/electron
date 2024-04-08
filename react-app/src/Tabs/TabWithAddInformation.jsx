@@ -1,7 +1,7 @@
 import { Button } from '../Buttons/Button'
 import style from './style.module.css'
 
-export function TabWithAddInformation({ addInformation, analyzedFiles }) {
+export function TabWithAddInformation({ addInformation, analyzedFiles, setSelectedFiles }) {
   const makeFetch = async () => {
     const body = {
       files: [...analyzedFiles.map((element) => ({
@@ -17,8 +17,9 @@ export function TabWithAddInformation({ addInformation, analyzedFiles }) {
       },
       body: JSON.stringify(body),
     })
-    if (res) {
-      console.log(res)
+    if (res.status === 200) {
+      alert('All done')
+      setSelectedFiles(null)
     }
   }
 
@@ -35,15 +36,17 @@ export function TabWithAddInformation({ addInformation, analyzedFiles }) {
           ))}
         </div>
       </div>
-      <div>
-        <Button
+
+      <div className={style.finalButtons}>
+        {/* <Button
           buttonName="Prev"
-        />
+        /> */}
         <Button
           buttonName="Make output files"
           onClickFunction={makeFetch}
         />
       </div>
+
     </>
   )
 }

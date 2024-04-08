@@ -3,6 +3,7 @@ import './App.css'
 import { Header } from './Header/Header'
 import style from './style.module.css'
 import { Main } from './Main/Main'
+import { Reset } from './Reset/Reset'
 
 function App() {
   const [selectedFiles, setSelectedFiles] = useState(null)
@@ -10,7 +11,8 @@ function App() {
   if (selectedFiles && selectedFiles.length > 0) {
     return (
       <div className={style.mainPage}>
-        <Header setSelectedFiles={setSelectedFiles} />
+        {/* <Header setSelectedFiles={setSelectedFiles} /> */}
+        <Reset setSelectedFiles={setSelectedFiles} />
         <Main selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
       </div>
     )

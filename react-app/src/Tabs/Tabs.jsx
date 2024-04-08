@@ -10,7 +10,7 @@ import { makeBordersString } from '../constrains/makeBordersString'
 import { Button } from '../Buttons/Button'
 
 export function Tabs({
-  selectedFiles, analyzedFiles, setAnalyzedFiles,
+  selectedFiles, setSelectedFiles, analyzedFiles, setAnalyzedFiles,
   isModalOpen, content, closeModalClickHandler, openModalClickHandler,
 }) {
   const [activeTab, setActiveTab] = useState('tab0')
@@ -34,6 +34,7 @@ export function Tabs({
       <TabWithAddInformation
         addInformation={addInformation}
         analyzedFiles={analyzedFiles}
+        setSelectedFiles={setSelectedFiles}
       />
     )
   }
@@ -50,7 +51,7 @@ export function Tabs({
         setAnalyzedFiles={setAnalyzedFiles}
       />
       <Button
-        buttonName="Analyze min and mas values"
+        buttonName="Analyze min and max values"
         onClickFunction={onClickNextButtonHandler}
       />
     </>
