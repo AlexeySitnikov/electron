@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-// const path = require('path')
+const path = require('path')
 
 const fileServer = require('./server/main.js')
 
@@ -14,9 +14,9 @@ const createWindow = () => {
     width: 800,
     height: 600,
   })
-  mainWindow.loadURL('http://localhost:3000')
-  // mainWindow.loadFile(path.join(__dirname, 'index.html'))
-  mainWindow.openDevTools()
+  // mainWindow.loadURL('http://localhost:3000')
+  mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  // mainWindow.openDevTools()
 }
 
 // This method will be called when Electron has finished
