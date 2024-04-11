@@ -6,7 +6,7 @@ export function getLinesByNumber(file, index) {
     new Promise((resolve, reject) => {
       let lineCount = 0
       let responce = {}
-      const startLine = file.deleteFirstTwoStrings ? 3 : 1
+      const startLine = file.linesToBeDeleted ? file.linesToBeDeleted + 1 : 1
       const reader = new TxtReader()
       reader.loadFile(file.file).progress((progress) => {
         if (index === 0) {

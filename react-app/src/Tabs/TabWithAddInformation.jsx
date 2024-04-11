@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/no-unknown-property */
 import { useEffect, useState } from 'react'
 import { Button } from '../Buttons/Button'
 import style from './style.module.css'
@@ -7,15 +5,9 @@ import style from './style.module.css'
 export function TabWithAddInformation({ addInformation, analyzedFiles, setSelectedFiles }) {
   const [addInformationForTraceWin, setAddInformationForTraceWin] = useState(true)
   const [eOrBField, setEOrBField] = useState(true)
+  let body = {}
 
   const makeFetch = async () => {
-    const body = {
-      files: [...analyzedFiles.map((element) => ({
-        name: element.path,
-        deleteFirstTwoStrings: element.deleteFirstTwoStrings,
-      }))],
-      addInformation,
-    }
     const res = await fetch('http://localhost:3333/asd/', {
       method: 'POST',
       headers: {
@@ -26,6 +18,8 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
     if (res.status === 200) {
       alert('All done')
       setSelectedFiles(null)
+    } else {
+      console.log(res)
     }
   }
 
@@ -39,24 +33,24 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
 
   useEffect(() => {
     if (addInformationForTraceWin) {
-      const body = {
+      body = {
         files: [...analyzedFiles.map((element) => ({
           name: element.path,
-          deleteFirstTwoStrings: element.deleteFirstTwoStrings,
+          linesToBeDeleted: element.linesToBeDeleted,
         }))],
         addInformation,
+        field: eOrBField ? 'EField' : 'BField',
       }
-      console.log(body)
     } else {
-      const body = {
+      body = {
         files: [...analyzedFiles.map((element) => ({
           name: element.path,
-          deleteFirstTwoStrings: element.deleteFirstTwoStrings,
+          linesToBeDeleted: element.linesToBeDeleted,
         }))],
+        field: eOrBField ? 'EField' : 'BField',
       }
-      console.log(body)
     }
-  }, [addInformationForTraceWin])
+  }, [addInformationForTraceWin, eOrBField])
 
   return (
     <>
@@ -65,25 +59,34 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
           Add this information into the files for TraceWin?
         </div>
         <br />
-        <div>
-          <div>
-            <div>
+        <div className={style.additionalInformationCheckBox}>
+          <p>
+            <label htmlFor="Yes">
               <input type="checkbox" id="Yes" checked={addInformationForTraceWin} onChange={onClickAddInfoForTraceWinHandler} />
-              <label htmlFor="Yes">Yes</label>
-            </div>
-            <div>
+              Yes
+            </label>
+          </p>
+          <p>
+            <label htmlFor="No">
               <input type="checkbox" id="No" checked={!addInformationForTraceWin} onChange={onClickAddInfoForTraceWinHandler} />
-              <label htmlFor="No">No</label>
-            </div>
-          </div>
-          <input directory="" webkitdirectory="" type="file" onChange={(e) => { console.log(e) }} />
+              No
+            </label>
+          </p>
         </div>
         <br />
-        <div>
-          <input type="checkbox" checked={eOrBField} onChange={onClickEOrBFieldHandler} />
-          <span>E field</span>
-          <input type="checkbox" checked={!eOrBField} onChange={onClickEOrBFieldHandler} />
-          <span>B field</span>
+        <div className={style.EOrBFieldCheckBox}>
+          <p>
+            <label htmlFor="EField">
+              <input type="checkbox" checked={eOrBField} id="EField" onChange={onClickEOrBFieldHandler} />
+              E field
+            </label>
+          </p>
+          <p>
+            <label htmlFor="BField">
+              <input type="checkbox" checked={!eOrBField} id="BField" onChange={onClickEOrBFieldHandler} />
+              B field
+            </label>
+          </p>
         </div>
         <br />
         <div className={style.additionalInformation}>

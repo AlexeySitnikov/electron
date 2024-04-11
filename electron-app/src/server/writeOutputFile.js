@@ -8,7 +8,9 @@ const writeOutputFile = (sourceFiles = [], targetFile, startWriteTime, addInform
   const files = sourceFiles
   const tempFilesToBeDeleted = [...sourceFiles]
   const fileWriteStream = fs.createWriteStream(targetFile)
-  fileWriteStream.write(addInformation)
+  if (addInformation) {
+    fileWriteStream.write(addInformation)
+  }
   streamMergeRecursive(files, fileWriteStream, tempFilesToBeDeleted, startWriteTime)
 }
 

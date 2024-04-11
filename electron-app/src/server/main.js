@@ -65,9 +65,13 @@ const fileServer = () => {
   })
 
   server.post('/asd/', async (req, res) => {
-    const { files, addInformation } = req.body
-    await mainFunction(getInputFiles(files), addInformation)
-    res.sendStatus(200)
+    const { files, addInformation, field } = req.body
+    try {
+      await mainFunction(getInputFiles(files), addInformation, field)
+      res.sendStatus(200)
+    } catch (error) {
+      res.send(error)
+    }
   })
 
   server.listen(PORT, () => {

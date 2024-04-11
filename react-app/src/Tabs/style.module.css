@@ -107,3 +107,21 @@
     display: flex;
     justify-content: space-around;
   }
+
+  .additionalInformationCheckBox{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .EOrBFieldCheckBox{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .EOrBFieldCheckBox input{
+    margin-right: 8px;
+  }
+
+  .additionalInformationCheckBox input{
+    margin-right: 8px;
+  }

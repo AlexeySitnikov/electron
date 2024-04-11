@@ -2,7 +2,7 @@ import { FileInformationData } from './FileInformationData'
 import { FileInformationHeader } from './FileInformationHeader'
 
 export function FileInformation({
-  el, analyzedFiles, setAnalyzedFiles,
+  el, analyzedFiles, setAnalyzedFiles, stringsToSniff, setStringsToSniff,
 }) {
   return (
     <div>
@@ -10,6 +10,8 @@ export function FileInformation({
         el={el}
         analyzedFiles={analyzedFiles}
         setAnalyzedFiles={setAnalyzedFiles}
+        stringsToSniff={stringsToSniff}
+        setStringsToSniff={setStringsToSniff}
       />
       <br />
       <FileInformationData

@@ -12,6 +12,7 @@ import { Button } from '../Buttons/Button'
 export function Tabs({
   selectedFiles, setSelectedFiles, analyzedFiles, setAnalyzedFiles,
   isModalOpen, content, closeModalClickHandler, openModalClickHandler,
+  stringsToSniff, setStringsToSniff,
 }) {
   const [activeTab, setActiveTab] = useState('tab0')
   const [addInformation, setAddInformation] = useState('')
@@ -49,6 +50,8 @@ export function Tabs({
         setActiveTab={setActiveTab}
         analyzedFiles={analyzedFiles}
         setAnalyzedFiles={setAnalyzedFiles}
+        stringsToSniff={stringsToSniff}
+        setStringsToSniff={setStringsToSniff}
       />
       <Button
         buttonName="Analyze min and max values"

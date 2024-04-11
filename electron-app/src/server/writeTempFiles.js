@@ -10,19 +10,13 @@ const writeTempFiles = (file, index, tempDirectory) => (
     let lineIndex = 0
     const readStream = fs.createReadStream(file.name, 'utf-8')
     const rl = readline.createInterface({ input: readStream })
-    if (file.deleteFirstTwoStrings) {
-      rl.on('line', (line) => {
-        if (lineIndex > 1) {
-          writeExEyEz(writerEx, writerEy, writerEz, line)
-        } else {
-          lineIndex += 1
-        }
-      })
-    } else {
-      rl.on('line', (line) => {
+    rl.on('line', (line) => {
+      if (lineIndex >= file.linesToBeDeleted) {
         writeExEyEz(writerEx, writerEy, writerEz, line)
-      })
-    }
+      } else {
+        lineIndex += 1
+      }
+    })
     rl.on('close', () => {
       writerEx.end()
       writerEy.end()

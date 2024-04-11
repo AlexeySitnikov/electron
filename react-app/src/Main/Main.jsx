@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import style from './style.module.css'
 import { Tabs } from '../Tabs/Tabs'
 import { useModalWindow } from '../CustomHooks/useModalWindow'
@@ -10,10 +10,18 @@ export function Main({ selectedFiles, setSelectedFiles }) {
   const {
     isModalOpen, content, closeModalClickHandler, openModalClickHandler,
   } = useModalWindow()
+  const [stringsToSniff, setStringsToSniff] = useState(5)
 
   const onClickReadButtonHandler = async () => {
-    setAnalyzedFiles(await sniffFiles({ selectedFiles }))
+    setAnalyzedFiles(await sniffFiles({ selectedFiles, stringsToSniff }))
   }
+
+  useEffect(() => {
+    async function a() {
+      setAnalyzedFiles(await sniffFiles({ selectedFiles, stringsToSniff }))
+    }
+    a()
+  }, [stringsToSniff])
 
   if (analyzedFiles) {
     return (
@@ -26,6 +34,8 @@ export function Main({ selectedFiles, setSelectedFiles }) {
         content={content}
         closeModalClickHandler={closeModalClickHandler}
         openModalClickHandler={openModalClickHandler}
+        stringsToSniff={stringsToSniff}
+        setStringsToSniff={setStringsToSniff}
       />
     )
   }

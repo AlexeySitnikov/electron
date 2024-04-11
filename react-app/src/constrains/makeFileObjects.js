@@ -3,7 +3,7 @@ export function makeFileObjects({ selectedFiles, analyzedFiles }) {
     const f = analyzedFiles.find((el) => (el.name === file.name))
     return {
       file,
-      deleteFirstTwoStrings: f.deleteFirstTwoStrings,
+      linesToBeDeleted: f.linesToBeDeleted,
       fileOrder: f.fileOrder,
     }
   })

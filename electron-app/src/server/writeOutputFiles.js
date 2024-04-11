@@ -9,12 +9,18 @@ const writeOutputFiles = (
   tempDirectory,
   startWriteTime,
   addInformation,
+  field,
 ) => {
   const { Ex, Ey, Ez } = getNamesOfTempFiles(files, tempDirectory)
-
-  writeOutputFile(Ex, `${currentDirectory}\\E.edx`, startWriteTime, addInformation)
-  writeOutputFile(Ey, `${currentDirectory}\\E.edy`, startWriteTime, addInformation)
-  writeOutputFile(Ez, `${currentDirectory}\\E.edz`, startWriteTime, addInformation)
+  if (field === 'EField') {
+    writeOutputFile(Ex, `${currentDirectory}\\E.edx`, startWriteTime, addInformation)
+    writeOutputFile(Ey, `${currentDirectory}\\E.edy`, startWriteTime, addInformation)
+    writeOutputFile(Ez, `${currentDirectory}\\E.edz`, startWriteTime, addInformation)
+  } else if (field === 'BField') {
+    writeOutputFile(Ex, `${currentDirectory}\\B.bsx`, startWriteTime, addInformation)
+    writeOutputFile(Ey, `${currentDirectory}\\B.bsy`, startWriteTime, addInformation)
+    writeOutputFile(Ez, `${currentDirectory}\\B.bsz`, startWriteTime, addInformation)
+  }
 }
 
 module.exports = writeOutputFiles

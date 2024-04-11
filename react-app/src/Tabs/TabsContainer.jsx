@@ -5,6 +5,7 @@ import { FileInformation } from './FileInformation'
 
 export function TabsContainer({
   activeTab, setActiveTab, analyzedFiles, setAnalyzedFiles,
+  stringsToSniff, setStringsToSniff,
 }) {
   const currentFiles = analyzedFiles
   return (
@@ -34,6 +35,8 @@ export function TabsContainer({
               key={crypto.randomUUID()}
               analyzedFiles={analyzedFiles}
               setAnalyzedFiles={setAnalyzedFiles}
+              stringsToSniff={stringsToSniff}
+              setStringsToSniff={setStringsToSniff}
             />
           </TabContent>
         ))}
