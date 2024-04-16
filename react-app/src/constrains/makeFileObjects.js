@@ -5,6 +5,7 @@ export function makeFileObjects({ selectedFiles, analyzedFiles }) {
       file,
       linesToBeDeleted: f.linesToBeDeleted,
       fileOrder: f.fileOrder,
+      type: f.type,
     }
   })
   return a

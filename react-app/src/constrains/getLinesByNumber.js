@@ -15,9 +15,13 @@ export function getLinesByNumber(file, index) {
       })
         .then((r) => {
           lineCount = r.result.lineCount
-          reader.getSporadicLines([startLine, { start: r.result.lineCount, count: 1 }])
+          reader.getSporadicLines([startLine, {
+            start: (file.type === '1D')
+              ? (r.result.lineCount - 1) : r.result.lineCount,
+            count: 1,
+          }])
             .then((result) => {
-              responce = { ...result }
+              responce = { ...result, type: file.type }
               if (index !== 0) { resolve(responce) }
             })
             .catch((er) => { reject(er) })

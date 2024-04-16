@@ -65,7 +65,9 @@ const fileServer = () => {
   })
 
   server.post('/asd/', async (req, res) => {
-    const { files, addInformation, field } = req.body
+    const {
+      files, addInformation, field,
+    } = req.body
     try {
       await mainFunction(getInputFiles(files), addInformation, field)
       res.sendStatus(200)

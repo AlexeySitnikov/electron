@@ -4,6 +4,7 @@ import style from './style.module.css'
 export function FileInformationHeader({
   el, analyzedFiles, setAnalyzedFiles, stringsToSniff, setStringsToSniff,
 }) {
+  // console.log({ el })
   const currentFiles = analyzedFiles
 
   const inputRefFilesOrder = useRef(null)
@@ -80,8 +81,8 @@ export function FileInformationHeader({
           <input
             className={style.in}
             type="number"
-            id="sniffLinesFromFiles"
-            name="sniffLinesFromFiles"
+            id="Count"
+            name="Count"
             min="0"
             max="100"
             value={el.linesToBeDeleted}

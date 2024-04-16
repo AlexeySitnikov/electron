@@ -37,6 +37,7 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
         files: [...analyzedFiles.map((element) => ({
           name: element.path,
           linesToBeDeleted: element.linesToBeDeleted,
+          type: element.type,
         }))],
         addInformation,
         field: eOrBField ? 'EField' : 'BField',
@@ -46,6 +47,7 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
         files: [...analyzedFiles.map((element) => ({
           name: element.path,
           linesToBeDeleted: element.linesToBeDeleted,
+          type: element.type,
         }))],
         field: eOrBField ? 'EField' : 'BField',
       }

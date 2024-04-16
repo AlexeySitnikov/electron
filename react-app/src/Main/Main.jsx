@@ -18,7 +18,8 @@ export function Main({ selectedFiles, setSelectedFiles }) {
 
   useEffect(() => {
     async function a() {
-      setAnalyzedFiles(await sniffFiles({ selectedFiles, stringsToSniff }))
+      const responce = await sniffFiles({ selectedFiles, stringsToSniff })
+      setAnalyzedFiles(responce)
     }
     a()
   }, [stringsToSniff])
