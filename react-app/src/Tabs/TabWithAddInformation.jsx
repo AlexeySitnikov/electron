@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Button } from '../Buttons/Button'
 import style from './style.module.css'
+import { Loader } from '../Loader/Loader'
 
 export function TabWithAddInformation({ addInformation, analyzedFiles, setSelectedFiles }) {
   const [addInformationForTraceWin, setAddInformationForTraceWin] = useState(true)
   const [eOrBField, setEOrBField] = useState(true)
+  const [loader, setLoader] = useState(false)
   let body = {}
 
   const makeFetch = async () => {
+    setLoader(true)
     const res = await fetch('http://localhost:3333/asd/', {
       method: 'POST',
       headers: {
@@ -16,10 +19,11 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
       body: JSON.stringify(body),
     })
     if (res.status === 200) {
+      setLoader(false)
       alert('All done')
       setSelectedFiles(null)
     } else {
-      console.log(res)
+      alert('Some error has been happened')
     }
   }
 
@@ -53,6 +57,15 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
       }
     }
   }, [addInformationForTraceWin, eOrBField])
+
+  if (loader) {
+    return (
+      <>
+        <br />
+        <Loader />
+      </>
+    )
+  }
 
   return (
     <>

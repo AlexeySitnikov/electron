@@ -1,16 +1,18 @@
 import { TxtReader } from 'txt-reader'
-// import { getLines } from './getLines'
 
-export function getLinesByNumber(file, index) {
+export function getLinesByNumber(file, index, {
+  setPreReadingPercentage, setReadingPercentage, setPreReading, setReading,
+}) {
   return (
     new Promise((resolve, reject) => {
       let lineCount = 0
       let responce = {}
       const startLine = file.linesToBeDeleted ? file.linesToBeDeleted + 1 : 1
       const reader = new TxtReader()
+      setPreReading(true)
       reader.loadFile(file.file).progress((progress) => {
         if (index === 0) {
-          console.log(`read file ${Math.round(progress)}%`)
+          setPreReadingPercentage(Math.round(progress))
         }
       })
         .then((r) => {
@@ -28,9 +30,11 @@ export function getLinesByNumber(file, index) {
         })
         .then(() => {
           if (index === 0) {
+            setPreReading(false)
+            setReading(true)
             reader.getLines(startLine, Math.round(lineCount / 10))
               .progress((progress) => {
-                console.log(`read first ${Math.round(lineCount / 10)} lines of file ${Math.round(progress)}%`)
+                setReadingPercentage(Math.round(progress))
               })
               .then((lines) => {
                 responce = { ...responce, lines }

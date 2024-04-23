@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useState } from 'react'
 
 import { hasFilesOrderDublicates } from '../constrains/hasFilesOrderDublicates'
@@ -8,6 +9,7 @@ import { TabWithAddInformation } from './TabWithAddInformation'
 import { makeFileObjects } from '../constrains/makeFileObjects'
 import { makeBordersString } from '../constrains/makeBordersString'
 import { Button } from '../Buttons/Button'
+import { ProgressBar } from '../ProgressBar/ProgressBar'
 
 export function Tabs({
   selectedFiles, setSelectedFiles, analyzedFiles, setAnalyzedFiles,
@@ -16,10 +18,20 @@ export function Tabs({
 }) {
   const [activeTab, setActiveTab] = useState('tab0')
   const [addInformation, setAddInformation] = useState('')
+  const [preReadingPercentage, setPreReadingPercentage] = useState(0)
+  const [readingPercentage, setReadingPercentage] = useState(0)
+  const [preReading, setPreReading] = useState(false)
+  const [reading, setReading] = useState(false)
 
   const onClickNextButtonHandler = async () => {
     if (!hasFilesOrderDublicates({ analyzedFiles })) {
-      const borders = await analizeBorders(makeFileObjects({ selectedFiles, analyzedFiles }))
+      const borders = await analizeBorders(makeFileObjects(
+        { selectedFiles, analyzedFiles },
+      ), {
+        setPreReadingPercentage, setReadingPercentage, setPreReading, setReading,
+      })
+      setPreReading(false)
+      setReading(false)
       makeBordersString({ setAddInformation, borders })
     } else {
       const id = {
@@ -40,11 +52,52 @@ export function Tabs({
     )
   }
 
+  if (preReading) {
+    return (
+      <>
+        <Modal isOpen={isModalOpen} closeModal={closeModalClickHandler}>
+          {content}
+        </Modal>
+
+        <TabsContainer
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          analyzedFiles={analyzedFiles}
+          setAnalyzedFiles={setAnalyzedFiles}
+          stringsToSniff={stringsToSniff}
+          setStringsToSniff={setStringsToSniff}
+        />
+        <ProgressBar name="Pre-reading" filled={preReadingPercentage} />
+      </>
+    )
+  }
+
+  if (reading) {
+    return (
+      <>
+        <Modal isOpen={isModalOpen} closeModal={closeModalClickHandler}>
+          {content}
+        </Modal>
+
+        <TabsContainer
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          analyzedFiles={analyzedFiles}
+          setAnalyzedFiles={setAnalyzedFiles}
+          stringsToSniff={stringsToSniff}
+          setStringsToSniff={setStringsToSniff}
+        />
+        <ProgressBar name="Reading" filled={readingPercentage} />
+      </>
+    )
+  }
+
   return (
     <>
       <Modal isOpen={isModalOpen} closeModal={closeModalClickHandler}>
         {content}
       </Modal>
+
       <TabsContainer
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -53,6 +106,7 @@ export function Tabs({
         stringsToSniff={stringsToSniff}
         setStringsToSniff={setStringsToSniff}
       />
+
       <Button
         buttonName="Analyze min and max values"
         onClickFunction={onClickNextButtonHandler}
