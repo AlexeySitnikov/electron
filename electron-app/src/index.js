@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron')
 // const path = require('path')
 
 const fileServer = require('./server/main.js')
+const webSocketFileServer = require('./server/webSocketServer.js')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -24,6 +25,7 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   fileServer()
+  webSocketFileServer()
   createWindow()
 })
 

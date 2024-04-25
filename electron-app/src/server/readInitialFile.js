@@ -1,11 +1,11 @@
 const writeTemp1DFiles = require('./writeTemp1DFiles')
 const writeTempFiles = require('./writeTempFiles')
 
-const readInitialFile = (file, index, tempDirectory) => {
+const readInitialFile = (file, index, tempDirectory, webSocketServer) => {
   if (tempDirectory) {
     if (file.type === '3D') {
       return (
-        writeTempFiles(file, index, tempDirectory)
+        writeTempFiles(file, index, tempDirectory, webSocketServer)
       )
     } if (file.type === '1D') {
       return (

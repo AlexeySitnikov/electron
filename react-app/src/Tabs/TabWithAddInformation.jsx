@@ -1,31 +1,54 @@
 import { useEffect, useState } from 'react'
 import { Button } from '../Buttons/Button'
 import style from './style.module.css'
-import { Loader } from '../Loader/Loader'
+// import { Loader } from '../Loader/Loader'
+import { ProgressBar } from '../ProgressBar/ProgressBar'
 
 export function TabWithAddInformation({ addInformation, analyzedFiles, setSelectedFiles }) {
   const [addInformationForTraceWin, setAddInformationForTraceWin] = useState(true)
   const [eOrBField, setEOrBField] = useState(true)
   const [loader, setLoader] = useState(false)
-  let body = {}
+  const [percentage, setPercentage] = useState(0)
 
-  const makeFetch = async () => {
+  let body = {}
+  const wsConnection = new WebSocket('ws://localhost:3334')
+
+  const makeWebSocketFetch = () => {
     setLoader(true)
-    const res = await fetch('http://localhost:3333/asd/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-    if (res.status === 200) {
-      setLoader(false)
-      alert('All done')
-      setSelectedFiles(null)
-    } else {
-      alert('Some error has been happened')
-    }
+    wsConnection.send(JSON.stringify(body))
   }
+
+  useEffect(() => {
+    wsConnection.onmessage = (m) => {
+      if (parseFloat(m.data)) {
+        setPercentage(parseFloat(m.data))
+      } else if (m.data === '"done"') {
+        setLoader(false)
+        alert('All done')
+        setSelectedFiles(null)
+      } else {
+        console.log(m.data)
+      }
+    }
+  }, [])
+
+  // const makeFetch = async () => {
+  //   setLoader(true)
+  //   const res = await fetch('http://localhost:3333/asd/', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(body),
+  //   })
+  //   if (res.status === 200) {
+  //     setLoader(false)
+  //     alert('All done')
+  //     setSelectedFiles(null)
+  //   } else {
+  //     alert('Some error has been happened')
+  //   }
+  // }
 
   const onClickAddInfoForTraceWinHandler = () => {
     setAddInformationForTraceWin(!addInformationForTraceWin)
@@ -62,7 +85,11 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
     return (
       <>
         <br />
-        <Loader />
+        <ProgressBar
+          name="Reading files"
+          filled={percentage}
+        />
+        {/* <Loader /> */}
       </>
     )
   }
@@ -117,8 +144,12 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
         /> */}
         <Button
           buttonName="Make output files"
-          onClickFunction={makeFetch}
+          onClickFunction={makeWebSocketFetch}
         />
+        {/* <Button
+          buttonName="Connet to WebSocket"
+          onClickFunction={makeWebSocketFetch}
+        /> */}
       </div>
 
     </>
