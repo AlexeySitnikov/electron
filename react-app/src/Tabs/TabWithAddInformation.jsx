@@ -9,28 +9,38 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
   const [eOrBField, setEOrBField] = useState(true)
   const [loader, setLoader] = useState(false)
   const [percentage, setPercentage] = useState(0)
+  const [url] = useState('ws://localhost:3334')
+  const [wsConnection, setWsConnection] = useState(null)
+  const [body, setBody] = useState({})
 
-  let body = {}
-  const wsConnection = new WebSocket('ws://localhost:3334')
+  // let body = {}
+  // const wsConnection = new WebSocket('ws://localhost:3334')
 
   const makeWebSocketFetch = () => {
     setLoader(true)
+    console.log(body)
     wsConnection.send(JSON.stringify(body))
   }
 
   useEffect(() => {
-    wsConnection.onmessage = (m) => {
-      if (parseFloat(m.data)) {
-        setPercentage(parseFloat(m.data))
-      } else if (m.data === '"done"') {
-        setLoader(false)
-        alert('All done')
-        setSelectedFiles(null)
-      } else {
-        console.log(m.data)
+    setWsConnection(new WebSocket(url))
+  }, [url])
+
+  useEffect(() => {
+    if (wsConnection) {
+      wsConnection.onmessage = (m) => {
+        if (parseFloat(m.data)) {
+          setPercentage(parseFloat(m.data))
+        } else if (m.data === '"done"') {
+          setLoader(false)
+          alert('All done')
+          setSelectedFiles(null)
+        } else {
+          console.log(m.data)
+        }
       }
     }
-  }, [])
+  }, [wsConnection])
 
   // const makeFetch = async () => {
   //   setLoader(true)
@@ -60,7 +70,7 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
 
   useEffect(() => {
     if (addInformationForTraceWin) {
-      body = {
+      setBody({
         files: [...analyzedFiles.map((element) => ({
           name: element.path,
           linesToBeDeleted: element.linesToBeDeleted,
@@ -68,16 +78,16 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
         }))],
         addInformation,
         field: eOrBField ? 'EField' : 'BField',
-      }
+      })
     } else {
-      body = {
+      setBody({
         files: [...analyzedFiles.map((element) => ({
           name: element.path,
           linesToBeDeleted: element.linesToBeDeleted,
           type: element.type,
         }))],
         field: eOrBField ? 'EField' : 'BField',
-      }
+      })
     }
   }, [addInformationForTraceWin, eOrBField])
 
@@ -142,10 +152,14 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
         {/* <Button
           buttonName="Prev"
         /> */}
-        <Button
-          buttonName="Make output files"
-          onClickFunction={makeWebSocketFetch}
-        />
+        {wsConnection
+          ? (
+
+            <Button
+              buttonName="Make output files"
+              onClickFunction={makeWebSocketFetch}
+            />
+          ) : null}
         {/* <Button
           buttonName="Connet to WebSocket"
           onClickFunction={makeWebSocketFetch}
