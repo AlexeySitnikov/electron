@@ -13,12 +13,8 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
   const [wsConnection, setWsConnection] = useState(null)
   const [body, setBody] = useState({})
 
-  // let body = {}
-  // const wsConnection = new WebSocket('ws://localhost:3334')
-
   const makeWebSocketFetch = () => {
     setLoader(true)
-    console.log(body)
     wsConnection.send(JSON.stringify(body))
   }
 
@@ -149,9 +145,6 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
       </div>
 
       <div className={style.finalButtons}>
-        {/* <Button
-          buttonName="Prev"
-        /> */}
         {wsConnection
           ? (
 
@@ -160,10 +153,6 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
               onClickFunction={makeWebSocketFetch}
             />
           ) : null}
-        {/* <Button
-          buttonName="Connet to WebSocket"
-          onClickFunction={makeWebSocketFetch}
-        /> */}
       </div>
 
     </>

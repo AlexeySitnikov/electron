@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron')
-// const path = require('path')
+const path = require('path')
 
-const fileServer = require('./server/main.js')
+// const fileServer = require('./server/main.js')
 const webSocketFileServer = require('./server/webSocketServer.js')
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -15,16 +15,16 @@ const createWindow = () => {
     width: 1200,
     height: 800,
   })
-  mainWindow.loadURL('http://localhost:3000')
-  // mainWindow.loadFile(path.join(__dirname, 'index.html'))
-  mainWindow.openDevTools()
+  // mainWindow.loadURL('http://localhost:3000')
+  mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  // mainWindow.openDevTools()
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
-  fileServer()
+  // fileServer()
   webSocketFileServer()
   createWindow()
 })
