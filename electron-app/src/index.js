@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const path = require('path')
+// const path = require('path')
 
 // const fileServer = require('./server/main.js')
 const webSocketFileServer = require('./server/webSocketServer.js')
@@ -12,11 +12,11 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1200,
+    width: 1400,
     height: 800,
   })
-  // mainWindow.loadURL('http://localhost:3000')
-  mainWindow.loadFile(path.join(__dirname, 'index.html'))
+  mainWindow.loadURL('http://localhost:3000')
+  // mainWindow.loadFile(path.join(__dirname, 'index.html'))
   // mainWindow.openDevTools()
 }
 

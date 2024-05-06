@@ -4,7 +4,6 @@ import style from './style.module.css'
 export function FileInformationHeader({
   el, analyzedFiles, setAnalyzedFiles, stringsToSniff, setStringsToSniff,
 }) {
-  // console.log({ el })
   const currentFiles = analyzedFiles
 
   const inputRefFilesOrder = useRef(null)
@@ -26,15 +25,6 @@ export function FileInformationHeader({
     }
     setAnalyzedFiles([...currentFiles])
   }
-
-  // const onChangeDeleteCheckHandler = () => {
-  //   const currentIndex = currentFiles.findIndex((element) => (element.name === el.name))
-  //   if (currentIndex > -1) {
-  //     currentFiles[currentIndex]
-  //       .deleteFirstTwoStrings = !currentFiles[currentIndex].deleteFirstTwoStrings
-  //   }
-  //   setAnalyzedFiles([...currentFiles])
-  // }
 
   return (
     <div>
@@ -93,33 +83,6 @@ export function FileInformationHeader({
         </label>
 
       </fieldset>
-      {/* <fieldset onChange={onChangeDeleteCheckHandler}>
-        <legend>Should first two lines be deleted?</legend>
-        <div>
-          <label htmlFor="yes">
-            Yes
-            <input
-              type="radio"
-              id="yes"
-              name="checkForDeleteFirstTwoLines"
-              value="yes"
-              defaultChecked={el.deleteFirstTwoStrings}
-            />
-          </label>
-        </div>
-        <div>
-          <label htmlFor="no">
-            No
-            <input
-              type="radio"
-              id="no"
-              name="checkForDeleteFirstTwoLines"
-              value="no"
-              defaultChecked={!el.deleteFirstTwoStrings}
-            />
-          </label>
-        </div>
-      </fieldset> */}
     </div>
   )
 }

@@ -59,7 +59,7 @@
   }
    
   ul.nav li.active {
-    background: #39A2DB;
+    background: chocolate;
   }
    
   /* Tab Content Styles */
@@ -124,4 +124,23 @@
 
   .additionalInformationCheckBox input{
     margin-right: 8px;
+  }
+
+  .activeButton{
+    border: none;
+    color: #E8F0F2;
+    background: chocolate;
+  }
+
+  .navButton{
+    border: none;
+    color: #E8F0F2;
+    background: #053742;
+  }
+
+  
+  .navButton:hover{
+    border: none;
+    color: #E8F0F2;
+    background: rgba(50, 224, 196, 0.15);
   }

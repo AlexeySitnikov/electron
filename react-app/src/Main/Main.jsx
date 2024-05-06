@@ -3,7 +3,7 @@ import style from './style.module.css'
 import { Tabs } from '../Tabs/Tabs'
 import { useModalWindow } from '../CustomHooks/useModalWindow'
 import { sniffFiles } from '../constrains/sniffFiles'
-import { Button } from '../Buttons/Button'
+import { Loader } from '../Loader/Loader'
 
 export function Main({ selectedFiles, setSelectedFiles }) {
   const [analyzedFiles, setAnalyzedFiles] = useState(null)
@@ -12,16 +12,12 @@ export function Main({ selectedFiles, setSelectedFiles }) {
   } = useModalWindow()
   const [stringsToSniff, setStringsToSniff] = useState(5)
 
-  const onClickReadButtonHandler = async () => {
-    setAnalyzedFiles(await sniffFiles({ selectedFiles, stringsToSniff }))
-  }
-
   useEffect(() => {
-    async function a() {
+    async function functionToSniffFiles() {
       const responce = await sniffFiles({ selectedFiles, stringsToSniff })
       setAnalyzedFiles(responce)
     }
-    a()
+    functionToSniffFiles()
   }, [stringsToSniff])
 
   if (analyzedFiles) {
@@ -43,12 +39,7 @@ export function Main({ selectedFiles, setSelectedFiles }) {
 
   return (
     <div className={style.mainPage}>
-      <div className={style.callModalWindowsStyle}>
-        <Button
-          onClickFunction={onClickReadButtonHandler}
-          buttonName="Read files"
-        />
-      </div>
+      <Loader />
     </div>
   )
 }

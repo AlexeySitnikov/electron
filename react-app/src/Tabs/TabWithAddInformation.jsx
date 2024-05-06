@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button } from '../Buttons/Button'
 import style from './style.module.css'
-// import { Loader } from '../Loader/Loader'
 import { ProgressBar } from '../ProgressBar/ProgressBar'
 
 export function TabWithAddInformation({ addInformation, analyzedFiles, setSelectedFiles }) {
@@ -24,15 +23,15 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
 
   useEffect(() => {
     if (wsConnection) {
-      wsConnection.onmessage = (m) => {
-        if (parseFloat(m.data)) {
-          setPercentage(parseFloat(m.data))
-        } else if (m.data === '"done"') {
-          setLoader(false)
+      wsConnection.onmessage = (message) => {
+        if (parseFloat(message.data)) {
+          setPercentage(parseFloat(message.data))
+        } else if (message.data === '"done"') {
           alert('All done')
+          setLoader(false)
           setSelectedFiles(null)
         } else {
-          console.log(m.data)
+          console.log(message.data)
         }
       }
     }
@@ -95,7 +94,6 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
           name="Reading files"
           filled={percentage}
         />
-        {/* <Loader /> */}
       </>
     )
   }
@@ -147,7 +145,6 @@ export function TabWithAddInformation({ addInformation, analyzedFiles, setSelect
       <div className={style.finalButtons}>
         {wsConnection
           ? (
-
             <Button
               buttonName="Make output files"
               onClickFunction={makeWebSocketFetch}
